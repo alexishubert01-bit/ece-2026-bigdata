@@ -1,4 +1,4 @@
-# ECE 2026 — Big Data
+# ECE 2026 : Big Data
 
 Travaux pratiques du cours Big Data.
 
