@@ -1,0 +1,18 @@
+# Lab 2 : Object storage with S3
+
+## Observations
+- L'ETag est égal au MD5 du fichier. Pour le fichier de 200 Mo, il finit par `-25` (25 parts de 8 Mo).
+- Le versioning et les règles de lifecycle fonctionnent sur SeaweedFS.
+- Bucket policy : suppression de `protected.csv` refusée / acceptée (à compléter).
+- Le Job a d'abord été bloqué par le quota Onyxia, qui exige une limite de CPU. Corrigé en ajoutant `limits.cpu: 200m`.
+
+## Questions
+
+**1. Pourquoi un Secret et pas une ConfigMap ?**
+Les identifiants sont des données sensibles. Un Secret est mieux protégé : ses droits d'accès sont séparés et il n'est pas affiché en clair. Une ConfigMap sert pour la configuration non sensible.
+
+**2. Que se passe-t-il si on relance le Job demain ?**
+Les identifiants auront expiré, donc le Job échouera. En production, on ne copie pas d'identifiants à la main : le Job reçoit automatiquement des identifiants temporaires, renouvelés par la plateforme (identité de ServiceAccount, Vault).
+
+**3. Comment en faire une ingestion quotidienne ?**
+On remplace le Job par un **CronJob**, avec par exemple `schedule: "0 2 * * *"` pour tous les jours à 2 h. On range aussi les fichiers par date (`bronze/date=2026-09-28/...`) pour ne pas écraser ceux de la veille.
