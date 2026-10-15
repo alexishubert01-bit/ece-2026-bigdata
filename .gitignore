@@ -9,3 +9,6 @@ __pycache__/
 init.sql
 *.csv
 *.parquet
+target/
+dbt_packages/
+logs/
