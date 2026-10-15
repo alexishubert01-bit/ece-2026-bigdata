@@ -4,3 +4,8 @@
 __pycache__/
 *.csv
 *.bin
+*.duckdb
+*.duckdb.wal
+init.sql
+*.csv
+*.parquet
