@@ -1,9 +1,16 @@
 models:
   - name: stg_users
-    description: One row per user, typed, with the address split into its components.
+    description: One row per user, typed, with the address split into its components and the birthdate validated against the first order.
     columns:
       - name: user_id
         description: Identifier of the user.
+        data_tests:
+          - unique
+          - not_null
+      - name: username
+        description: Username as delivered by the source, trimmed.
+      - name: username_normalized
+        description: Username trimmed and lower-cased, used for matching and deduplication.
         data_tests:
           - unique
           - not_null
@@ -16,6 +23,16 @@ models:
           - accepted_values:
               arguments:
                 values: ["F", "M"]
+      - name: birthdate
+        description: Birthdate of the user, NULL when later than the user's first order.
+      - name: birthdate_is_valid
+        description: True when the original birthdate is earlier than the user's first order.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [true, false]
+                quote: false
       - name: state
         description: Two letters code of the state, territory or military region.
         data_tests:
@@ -40,6 +57,7 @@ models:
                 to: ref('stg_users')
                 field: user_id
       - name: quantity
+        description: Quantity ordered, a strictly positive integer (see assert_orders_quantity_positive).
         data_tests:
           - accepted_values:
               arguments:
