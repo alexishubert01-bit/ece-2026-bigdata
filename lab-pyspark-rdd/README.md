@@ -1,13 +1,13 @@
 # Lab: Introduction to Spark's RDD API
 
-Author: <your name>
+>
 Environment: Onyxia `vscode-pyspark`, PySpark 4.1.1, `local[*]`, datasets `bronze/users.csv` (7 KB) and `bronze/orders.csv` (324 KB).
 
 ## 1. RDD creation and partitions
 
 Results: `users_lines` and `orders_lines` both have 2 partitions; `orders_lines.repartition(8)` has 8.
 
-- **What decides the default number of partitions of `textFile()`?** Spark creates one partition per file block, but the files here are far smaller than a block. The default `minPartitions` of `textFile()` is `min(defaultParallelism, 2)`, hence 2 partitions whatever the number of cores.
+- **What decides the default number  of partitions of `textFile()`?** Spark creates one partition per file block, but the files here are far smaller than a block. The default `minPartitions` of `textFile()` is `min(defaultParallelism, 2)`, hence 2 partitions whatever the number of cores.
 - **`repartition()` vs `coalesce()`:** `repartition()` always shuffles and can increase or decrease the partition count. `coalesce()` does not shuffle by default (it merges neighbouring partitions) and is meant to reduce the count.
 
 ## 2. Lazy evaluation and lineage
