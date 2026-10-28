@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+derby.log
+metastore_db/
+warehouse/**/data/
