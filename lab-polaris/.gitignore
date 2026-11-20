@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+run*.log
+nohup.out
+warehouse/**/data/
+.env
