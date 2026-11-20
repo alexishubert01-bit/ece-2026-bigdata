@@ -1,0 +1,3 @@
+polaris/deployment/charts/
+.polaris-credentials.env
+*.env
