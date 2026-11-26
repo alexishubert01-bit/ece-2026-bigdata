@@ -1,0 +1,3 @@
+trino/deployment/charts/
+*.log
+logs/
